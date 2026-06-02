@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teylo Aim Training Mod — Andrei Severin</title>
+  <meta name="description"
+    content="Teylo Aim Training Mod — A custom gameplay modification and training platform for Half-Life and Adrenaline Gamer.">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Inter Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Shared Custom Styles -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+
+  <style>
+    /* ============================================================
+         PROJECT DETAIL PAGE — Scoped Styles
+         ============================================================ */
+
+    .detail-hero {
+      position: relative;
+      padding: 8rem 2rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .detail-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 2px;
+      background: var(--gradient-primary);
+      border-radius: 1px;
+    }
+
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color var(--transition-base);
+      margin-bottom: 2rem;
+    }
+
+    .detail-back:hover {
+      color: var(--accent-indigo);
+    }
+
+    .detail-badge {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-radius: var(--radius-full);
+      background: rgba(99, 102, 241, 0.12);
+      color: var(--accent-indigo);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-title {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .detail-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      line-height: 1.75;
+    }
+
+    .detail-tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .detail-tech-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+      transition: all var(--transition-base);
+    }
+
+    .detail-tech-pill:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.25);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- Content Section ---------- */
+    .detail-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .detail-section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-indigo);
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gradient-primary);
+      border-radius: 1px;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: all var(--transition-base);
+    }
+
+    .feature-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(99, 102, 241, 0.15);
+      transform: translateX(4px);
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--accent-indigo);
+      font-size: 1rem;
+    }
+
+    .feature-text {
+      flex: 1;
+    }
+
+    .feature-text strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .feature-text p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ---------- Screenshot Gallery ---------- */
+    .gallery-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 400px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gallery-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all var(--transition-base);
+      cursor: pointer;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-card-hover), var(--shadow-glow);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--transition-slow);
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .gallery-card-caption {
+      padding: 1rem 1.25rem;
+    }
+
+    .gallery-card-caption h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .gallery-card-caption p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ---------- Lightbox ---------- */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+      animation: lightbox-fade-in 0.25s ease;
+    }
+
+    .lightbox-overlay.active {
+      display: flex;
+    }
+
+    .lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+      cursor: default;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-primary);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: all var(--transition-base);
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all var(--transition-base);
+    }
+
+    .lightbox-nav:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .lightbox-prev {
+      left: 1.5rem;
+    }
+
+    .lightbox-next {
+      right: 1.5rem;
+    }
+
+    @keyframes lightbox-fade-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* ---------- Empty gallery placeholder ---------- */
+    .gallery-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      border: 2px dashed rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-lg);
+      color: var(--text-muted);
+    }
+
+    .gallery-empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.4;
+    }
+
+    .gallery-empty p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .gallery-empty code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      color: var(--accent-cyan);
+    }
+
+    /* ---------- LinkedIn paragraph ---------- */
+    .linkedin-card {
+      margin-top: 3rem;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      background: rgba(99, 102, 241, 0.04);
+      border: 1px solid rgba(99, 102, 241, 0.12);
+      position: relative;
+    }
+
+    .linkedin-card::before {
+      content: '"';
+      position: absolute;
+      top: 0.5rem;
+      left: 1.25rem;
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(99, 102, 241, 0.15);
+      line-height: 1;
+      font-family: Georgia, serif;
+    }
+
+    .linkedin-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      padding-left: 0.5rem;
+      font-style: italic;
+    }
+
+    .linkedin-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-indigo);
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 640px) {
+      .detail-hero {
+        padding: 7rem 1.25rem 3rem;
+      }
+
+      .detail-content {
+        padding: 3rem 1.25rem;
+      }
+
+      .gallery-section {
+        padding: 2rem 1.25rem 4rem;
+      }
+
+      .feature-item {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+         NAVIGATION (shared with main site)
+         ============================================================ -->
+  <nav class="nav-container" id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">andrei<span>.</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="../index.html#about" onclick="closeNav()">About</a></li>
+        <li><a href="../index.html#projects" onclick="closeNav()">Projects</a></li>
+        <li><a href="../index.html#skills" onclick="closeNav()">Skills</a></li>
+        <li><a href="../index.html#contact" onclick="closeNav()">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+         HERO
+         ============================================================ -->
+  <section class="detail-hero">
+    <a href="../index.html#projects" class="detail-back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to Projects
+    </a>
+    <div>
+      <span class="detail-badge">Half-Life Gameplay Modification & C/C++ Systems</span>
+    </div>
+    <h1 class="detail-title gradient-text">Teylo Aim Training Mod</h1>
+    <p class="detail-subtitle">
+      A comprehensive aim training mod and developer platform built for Half-Life and Adrenaline Gamer, introducing bots, custom UI menus, telemetry wallhacks, and multiple interactive training modules.
+    </p>
+    <div class="detail-tech-row">
+      <span class="detail-tech-pill">C / C++</span>
+      <span class="detail-tech-pill">AMX Mod X</span>
+      <span class="detail-tech-pill">Half-Life SDK</span>
+      <span class="detail-tech-pill">Metamod</span>
+      <span class="detail-tech-pill">HL/AG Engine</span>
+      <span class="detail-tech-pill">ScriptedSnark / MTBot</span>
+    </div>
+    <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+      <a href="https://github.com/andreiseverin/teylo-aim-training-mod" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        Source Code
+      </a>
+      <a href="https://youtu.be/nYgqZ-DnQ9s" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        Watch Demo Video
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+         FEATURES / DESCRIPTION
+         ============================================================ -->
+  <section class="detail-content">
+    <div class="detail-section-label">Key Features</div>
+
+    <ul class="feature-list">
+      <li class="feature-item">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-text">
+          <strong>Intelligent Bot Training Engine</strong>
+          <p>Includes a classic bot training system and spawn training module utilizing customized MTBot algorithms to simulate realistic movement, player positioning, and combat encounters.</p>
+        </div>
+      </li>
+      <li class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-text">
+          <strong>Interactive Telemetry & Mechanics</strong>
+          <p>Implements real-time telemetry systems, tracking damage metrics, blue fade screens on kills, wallhack overlays, and weaponbox controls to help players analyze and polish their recoil and aim routines.</p>
+        </div>
+      </li>
+      <li class="feature-item">
+        <div class="feature-icon">🛠️</div>
+        <div class="feature-text">
+          <strong>Custom Training Map Rotations</strong>
+          <p>Comes packaged with custom maps specifically designed for aim training (`test_ro`, `test_ro2`, `teylo_training_facility`, `fire_training_facility`, `fire_reflex_training`, `fire_horizontal`, `aimtrainingcenter`, and `ptk_aimtracking2`).</p>
+        </div>
+      </li>
+      <li class="feature-item">
+        <div class="feature-icon">🏆</div>
+        <div class="feature-text">
+          <strong>Challenge Mode & Highscores</strong>
+          <p>Features a localized Challenge Mode that records player run times and accuracies, saving records to a custom Top 15 leaderboard in the system configs.</p>
+        </div>
+      </li>
+      <li class="feature-item">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-text">
+          <strong>Metamod / AMX Mod X Architecture</strong>
+          <p>Designed as a Metamod and AMX Mod X server plugin, supporting Windows and Linux dedicated servers with custom configurations, active game procedures, and a dynamic menu toggle.</p>
+        </div>
+      </li>
+    </ul>
+
+    <!-- LinkedIn / Cover letter paragraph -->
+    <div class="linkedin-card">
+      <span class="linkedin-label">Summary</span>
+      <p>
+        Designed and developed Teylo Aim Training Mod, a custom gameplay modification and server-side plugin built with C/C++, AMX Mod X, and the Half-Life SDK. The platform implements classic and spawn training modules with intelligent bots, wallhack overlays, real-time damage telemetry, and weaponbox systems. It incorporates a customizable interactive menu, server-side configuration profiles, and a local highscore database for a Top 15 challenge mode. The plugin integrates with custom-designed training maps and runs on both Windows and Linux dedicated server environments using Metamod architectures.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+         SCREENSHOT GALLERY
+         ============================================================ -->
+  <section class="gallery-section">
+    <div class="detail-section-label">Screenshots & Demo</div>
+
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Dynamically populated by JavaScript -->
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+         LIGHTBOX
+         ============================================================ -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#8249;</button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">&#8250;</button>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+
+  <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+  <script>
+    /* ==================================================================
+       SCREENSHOT DATA
+       ================================================================== */
+    const screenshots = [
+      {
+        src: "../images/projects/teylo-aim-training/teylo-aim-training-hero.png",
+        title: "Teylo Aim Training Mod Hero View",
+        description: "Official repository preview demonstrating the custom map structure and the training facilities."
+      },
+      {
+        src: "../images/projects/teylo-aim-training/teylo-aim-training-demo.jpg",
+        title: "Interactive Aim Training Gameplay",
+        description: "Active training session showing the customized bot spawn, HUD indicators, and recoil tracking tools."
+      }
+    ];
+
+    let currentLightboxIndex = 0;
+
+    /* ==================================================================
+       RENDER: Gallery
+       ================================================================== */
+    function renderGallery() {
+      const grid = document.getElementById('gallery-grid');
+
+      if (screenshots.length === 0) {
+        grid.innerHTML = `
+                <div class="gallery-empty">
+                    <div class="gallery-empty-icon">📸</div>
+                    <p>No screenshots added yet.</p>
+                </div>
+            `;
+        return;
+      }
+
+      grid.innerHTML = screenshots.map((shot, index) => `
+            <div class="gallery-card" onclick="openLightbox(${index})" role="button" tabindex="0" aria-label="View ${shot.title}">
+                <img
+                    src="${shot.src}"
+                    alt="${shot.title}"
+                    loading="lazy"
+                >
+                <div class="gallery-card-caption">
+                    <h4>${shot.title}</h4>
+                    <p>${shot.description}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+
+
+    /* ==================================================================
+       LIGHTBOX
+       ================================================================== */
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      const shot = screenshots[index];
+      const overlay = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      const caption = document.getElementById('lightbox-caption');
+
+      img.src = shot.src;
+      img.alt = shot.title;
+      caption.textContent = shot.title + (shot.description ? ' — ' + shot.description : '');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function navigateLightbox(direction) {
+      currentLightboxIndex = (currentLightboxIndex + direction + screenshots.length) % screenshots.length;
+      const shot = screenshots[currentLightboxIndex];
+      document.getElementById('lightbox-img').src = shot.src;
+      document.getElementById('lightbox-img').alt = shot.title;
+      document.getElementById('lightbox-caption').textContent = shot.title + (shot.description ? ' — ' + shot.description : '');
+    }
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-prev').addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(-1); });
+    document.getElementById('lightbox-next').addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(1); });
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const overlay = document.getElementById('lightbox');
+      if (!overlay.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateLightbox(-1);
+      if (e.key === 'ArrowRight') navigateLightbox(1);
+    });
+
+
+    /* ==================================================================
+       NAVIGATION
+       ================================================================== */
+    function initNavigation() {
+      const navbar = document.getElementById('navbar');
+      const toggle = document.getElementById('nav-toggle');
+      const links = document.getElementById('nav-links');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      }, { passive: true });
+
+      toggle.addEventListener('click', () => {
+        toggle.classList.toggle('active');
+        links.classList.toggle('open');
+      });
+    }
+
+    function closeNav() {
+      document.getElementById('nav-toggle').classList.remove('active');
+      document.getElementById('nav-links').classList.remove('open');
+    }
+
+
+    /* ==================================================================
+       BOOT
+       ================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGallery();
+      initNavigation();
+    });
+  </script>
+
+</body>
+
+</html>
